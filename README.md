@@ -50,5 +50,5 @@ Contributions are what make the open-source community such a fantastic place to 
 
 ## Contact
 
-- Your Name - [lansarbacoro@gmail.com]
+-[lansarbacoro@gmail.com]
 - Project Link: [https://github.com/Lansarbac2020/schooldbms/](https://github.com/Lansarbac2020/schooldbms/)
