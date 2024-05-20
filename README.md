@@ -31,6 +31,7 @@ This repository contains a School Management Database System built with .NET Win
 
 - **Programming Language**: C#
 - **Framework**: .NET Windows Forms
+- Mysql Server/ XAMPP
 
 ## Usage
 
