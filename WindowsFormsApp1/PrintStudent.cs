@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,19 +29,19 @@ namespace WindowsFormsApp1
 
         private void PrintStudent_Load(object sender, EventArgs e)
         {
-            showData(new MySqlCommand("SELECT * FROM `student`"));
+            showData(new MySqlCommand("SELECT * FROM `Student_Score_View`"));
         }
         //funcion to show the std list in datagridview
         public void showData(MySqlCommand command)
         {
             DataGridView_student.ReadOnly = true;
-            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
-          //  DataGridView_student.Height = 80;
-            DataGridView_student.DataSource = student.getList(command);
+           // DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+            DataGridView_student.Height = 80;
+          DataGridView_student.DataSource = student.getList(command);
 
-            imageColumn = (DataGridViewImageColumn)DataGridView_student.Columns[8];
+          //  imageColumn = (DataGridViewImageColumn)DataGridView_student.Columns[8];
             //image column
-            imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
+           // imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
         }
 
         private void button_search_Click(object sender, EventArgs e)
@@ -50,34 +50,25 @@ namespace WindowsFormsApp1
             string selectQuery;
             if (radioButton_all.Checked)
             {
-                selectQuery = "SELECT * FROM `student`";
+                selectQuery = "SELECT * FROM `Student_Score_View`";
 
             }
             else if(radioButton_male.Checked)
             {
-                selectQuery = "SELECT * FROM `student` WHERE `Gender`= 'Male'";
+                selectQuery = "SELECT * FROM `Student_Score_View` WHERE `Gender`= 'Male'";
             }
             else
             {
-                selectQuery = "SELECT * FROM `student` WHERE `Gender`= 'Female'";
+                selectQuery = "SELECT * FROM `Student_Score_View` WHERE `Gender`= 'Female'";
             }
             showData(new MySqlCommand(selectQuery));
         }
 
-        private void button_print_Click(object sender, EventArgs e)
+       
+
+        private void label7_Click(object sender, EventArgs e)
         {
-            // print by DGVPrinter 
-            printer.Title = "International HighSchool Students List";
-            printer.SubTitle = string.Format("Date : {0}", DateTime.Now.Date);
-            printer.SubTitleFormatFlags = StringFormatFlags.LineLimit | StringFormatFlags.NoClip;
-            printer.PageNumbers = true;
-            printer.PageNumberInHeader = false;
-            printer.PorportionalColumns = true;
-            printer.HeaderCellAlignment = StringAlignment.Near;
-            printer.Footer = "lansarcenter";
-            printer.FooterSpacing = 15;
-            printer.printDocument.DefaultPageSettings.Landscape = true;
-            printer.PrintDataGridView(DataGridView_student);
+
         }
     }
 }
