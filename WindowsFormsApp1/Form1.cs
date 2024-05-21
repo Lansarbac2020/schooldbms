@@ -17,6 +17,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             customizeDesign();
+            LoadStudentStatistics();
         }
 
 
@@ -32,6 +33,37 @@ namespace WindowsFormsApp1
             label_totalStd.Text = "Total Students :" + student.totalStudent();
             label_maleStd.Text = "Male :" + student.maleStudent();
             label_femaleStd.Text = "Female :" + "" + student.femaleStudent();
+        }
+                //use of trigger 
+        private void LoadStudentStatistics()
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT total_students, male_students, female_students FROM student_counts";
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                try
+                {
+                    connection.Open();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            label_totalStd.Text = reader["total_students"].ToString();
+                            label_maleStd.Text = reader["male_students"].ToString();
+                            label_femaleStd.Text = reader["female_students"].ToString();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Aucune statistique des étudiants n'a été trouvée.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erreur lors du chargement des statistiques des étudiants : " + ex.Message);
+                }
+            }
         }
 
         private void customizeDesign()
