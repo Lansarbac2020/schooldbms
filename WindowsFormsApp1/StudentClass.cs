@@ -120,24 +120,46 @@ namespace WindowsFormsApp1
             }
 
         }
-        //function to delete data
-        public bool deleteStudent(int id)
+          //function to delete data
+        public bool deleteStudent(int studentId)
         {
-            MySqlCommand command = new MySqlCommand("DELETE FROM `student` WHERE `StdId`=@id", connect.getConnection);
-          //id
-          command.Parameters.Add("@id", MySqlDbType.Int32 ).Value = id;
-            connect.openConnect();
-            if(command.ExecuteNonQuery() == 1)
+            try
             {
+                // Créer une commande SQL pour supprimer l'étudiant de la base de données
+                MySqlCommand command = new MySqlCommand("DELETE FROM student WHERE StdId = @studentId", connect.getConnection);
+                command.Parameters.AddWithValue("@studentId", studentId);
+
+                // Ouvrir la connexion à la base de données
+                connect.openConnect();
+
+                // Exécuter la commande SQL
+                int rowsAffected = command.ExecuteNonQuery();
+
+                // Fermer la connexion à la base de données
                 connect.closeConnect();
-                return true;
+
+                // Vérifier si la suppression a réussi
+                if (rowsAffected > 0)
+                {
+                    // Suppression réussie : retourner true
+                    return true;
+                }
+                else
+                {
+                    // Aucun enregistrement n'a été supprimé : retourner false
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                connect.closeConnect();
+                // Gérer les exceptions ici (par exemple, journalisation, affichage d'un message d'erreur)
+                Console.WriteLine("Erreur lors de la suppression de l'étudiant : " + ex.Message);
+
+                // Retourner false pour indiquer que l'opération de suppression a échoué
                 return false;
             }
         }
+
         // function for any command in studentDb
         public DataTable getList(MySqlCommand command)
         {
